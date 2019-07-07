@@ -1,0 +1,10 @@
+library(tidyverse)
+
+interest <- function(initial, rate, n){
+  prin <- initial * (1+rate/100)^(0:(n-1))
+  return(prin)
+}
+
+comm_2016 = interest(6174, 6, 12)
+interest(6000, 4, 12)
+interest(6000, 2, 12)

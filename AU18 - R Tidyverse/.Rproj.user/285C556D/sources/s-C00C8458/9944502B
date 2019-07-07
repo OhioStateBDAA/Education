@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1540324381011.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "9944502B",
+    "lastKnownWriteTime" : 1540324405,
+    "last_content_update" : 1540325303696,
+    "path" : "~/ZillowExercise.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "7,25",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

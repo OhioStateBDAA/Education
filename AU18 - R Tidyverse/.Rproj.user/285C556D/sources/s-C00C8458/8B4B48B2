@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1540218530877.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1282124416",
+    "id" : "8B4B48B2",
+    "lastKnownWriteTime" : 1540324708,
+    "last_content_update" : 1540324708100,
+    "path" : "~/BDAA/Tidyverse-Workshop/Tidyverse Workshop/R Files/Controller.R",
+    "project_path" : "Tidyverse Workshop/R Files/Controller.R",
+    "properties" : {
+        "cursorPosition" : "80,28",
+        "scrollLine" : "56"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

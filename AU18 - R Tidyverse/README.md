@@ -6,7 +6,7 @@
 
 **Keywords:** R;tidyverse
 
-**Software Requirements:**
+**Software:**
  - [R](https://cloud.r-project.org/)
  - [RStudio](https://www.rstudio.com/products/rstudio/download/)
 

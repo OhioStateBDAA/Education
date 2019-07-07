@@ -6,6 +6,9 @@
 
 **Keywords:** Python;web scraping
 
+**Software:**
+ - [Python 3.6+](https://www.python.org/downloads/)
+
 **Description:**
 > This workshop covers ways to automate the extraction of web data into formats that are more suitable for data science. The primary Python library used in this workshop, BeautifulSoup, allows easy extraction of data from HTML and XML to tabular formats. By the end of this workshop, you will be able to extract data from your favorite websites using Python for use in future analysis.
 

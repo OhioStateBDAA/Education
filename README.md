@@ -15,4 +15,6 @@ Don't know how to use GitHub yet? Don't fret! Check out [this GitHub overview](h
 
 **Subjects covered:**
  - Web scraping
+ - Analytics web applications
+ - Text analytics
  - Tidyverse

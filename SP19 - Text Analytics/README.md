@@ -11,6 +11,7 @@
 
 **Description:**
 > Interested in extracting meaning from mass amounts of text and learning more Python? We'll take advantage of widely-used Python packages and algorithms to classify, summarize, and model real-world troves of interesting text.
+
 **Workshop Progression:**
 
 You can progress through the code (practice and exercises) in the following order:

@@ -17,4 +17,5 @@ Don't know how to use GitHub yet? Don't fret! Check out [this GitHub overview](h
  - Web scraping
  - Analytics web applications
  - Text analytics
- - Tidyverse
+ - R Tidyverse package
+ - Text classification

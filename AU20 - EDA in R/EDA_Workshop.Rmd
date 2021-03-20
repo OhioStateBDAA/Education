@@ -1,0 +1,54 @@
+---
+title: "EDA Workshop - Student Data"
+author: "Leo Glowacki"
+date: "9/9/2020"
+output: html_document
+---
+
+Workshop Recording: https://www.youtube.com/watch?v=9t878Fx2jiI
+
+```{r setup, include=FALSE}
+### SETUP --- YOU CAN IGNORE THIS
+
+knitr::opts_chunk$set(echo = TRUE)
+# import libraries - ggplot is in the tidyverse
+library(tidyverse)
+
+# import data
+student_por = read_delim("student-por.csv", 
+                          ";", escape_double = FALSE, trim_ws = TRUE)
+# make all character columns factor variables
+student_por = student_por %>% 
+                mutate_if(is.character, factor)
+# create pass/fail variable
+student_por = student_por %>% 
+                mutate(passfail = as.factor(case_when(
+                  G3 < 10 ~ "fail",
+                  G3 >= 10 ~ "pass"
+                )))
+```
+
+```{r}
+ggplot(student_por) + 
+  geom_boxplot(aes(x=reason, y=G3, fill=sex)) + 
+  geom_hline(yintercept=10, linetype="dashed") +
+  facet_wrap(~school, ncol=2) +
+  ylim(0, 20) +
+  labs(
+    title = "Student Final Grades",
+    subtitle = "By Student's School, Reason for Choosing, and Sex",
+    y = "Final Grade",
+    x = "Reason for Choosing School",
+    caption = "Source: P. Cortez and A. Silva."
+  ) +
+  theme_dark()
+```
+
+
+```{r}
+# Your Turn 
+# Write your code under this line, anywhere in this shaded section
+
+
+```
+

@@ -1,0 +1,88 @@
+---
+title: "ML Bootcamp"
+author: "Leo Glowacki"
+date: "9/17/2020"
+output: html_document
+---
+
+Workshop Recording: https://www.youtube.com/watch?v=JJJg5wmcDuY  
+
+```{r setup, include=FALSE}
+set.seed(2)
+knitr::opts_chunk$set(echo = TRUE)
+# import libraries/packages
+# the tidyverse contains ggplot, dplyr, and more... 
+# some of the most common R packages
+library(tidyverse)
+# for machine learning
+library(caret)
+# for plotting decision trees
+library(rpart.plot)
+# for making decision trees
+library(ranger)
+
+# import data
+student_por = read_delim("student-por.csv", 
+    ";", escape_double = FALSE, trim_ws = TRUE)
+
+# make all character columns factor variables
+student_por = student_por %>% mutate_if(is.character, factor)
+
+# create pass/fail variable
+student_por = student_por %>% mutate(passfail = as.factor(case_when(
+  G3 < 10 ~ "fail",
+  G3 >= 10 ~ "pass"
+)))
+
+# create letter grade variable
+student_por = student_por %>% mutate(letter_grade = as.factor(case_when(
+  G3 <= 9 ~ "F",
+  G3 <= 11 ~ "D",
+  G3 <= 13 ~ "C",
+  G3 <= 15 ~ "B",
+  G3 <= 20 ~ "A"
+)))
+```
+
+```{r}
+# remove a few students to predict later
+new_students = student_por %>% sample_n(10)
+# remove the "new students" from the training dataset
+student_por = student_por[-as.numeric(rownames(new_students)),]
+```
+
+```{r}
+dt_model = train(letter_grade ~ school + sex + age + address + famsize + Pstatus + Medu + Fedu + Mjob + Fjob + reason + guardian + traveltime + studytime + failures + schoolsup + famsup + paid + activities + nursery + higher + internet + romantic + famrel + freetime + goout + Dalc + Walc + health + absences + G1 + G2,
+               data = student_por,
+               method = "rpart")
+print(dt_model)
+
+# cp=complexity parameter
+```
+
+```{r}
+# plot decision tree model
+rpart.plot(dt_model$finalModel)
+```
+
+```{r}
+# predict new samples
+as.vector(predict(dt_model, new_students))
+as.vector(new_students$letter_grade)
+```
+
+```{r}
+# random forest
+rf_model = train(letter_grade ~ school + sex + age + address + famsize + Pstatus + Medu + Fedu + Mjob + Fjob + reason + guardian + traveltime + studytime + failures + schoolsup + famsup + paid + activities + nursery + higher + internet + romantic + famrel + freetime + goout + Dalc + Walc + health + absences + G1 + G2,
+               data = student_por,
+               method = "ranger")
+print(rf_model)
+```
+
+```{r}
+# predict new samples
+as.vector(predict(rf_model, new_students))
+as.vector(new_students$letter_grade)
+```
+
+

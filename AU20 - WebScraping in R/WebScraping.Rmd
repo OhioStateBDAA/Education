@@ -1,0 +1,91 @@
+---
+title: "Web Scraping"
+author: "You!"
+date: "9/28/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# import libraries
+# for web scraping
+library(rvest)
+# for data manipulation
+#includes  ggplot2, dplyr, tidyr, readr, purrr, tibble, stringr, and forcats
+library(tidyverse)
+
+
+# we'll use these later... 
+# dont' worry about understanding them too much
+# turn numbers with B, M, or, K at the end into their numerical value
+B_or_M_or_K_to_num = function(string_num) {
+  if (!is.na(string_num)) {
+    if (str_detect(string_num, "B")) {
+      as.numeric(str_remove(string_num, "B")) * 10^9
+    } 
+    else if (str_detect(string_num, "M")) {
+      as.numeric(str_remove(string_num, "M")) * 10^6
+    } 
+    else if (str_detect(string_num, "K")) {
+      as.numeric(str_remove(string_num, "K")) * 10^3
+    } 
+    else {
+      as.numeric(string_num)
+    }
+  } else {
+    NA
+  }
+}
+
+# take anything that is "--" and make it NA
+set_dashes_as_NA = function(string_num) {
+  ifelse(string_num == "--", NA, string_num)
+}
+
+# take the raw df from the income statement table and make it "tidy"
+tidy_income_statement_df = function(df, ticker) {
+  # fix duplicate column names
+  valid_column_names = make.names(names=names(df), unique=TRUE, allow_ = TRUE)
+  names(df) = valid_column_names
+
+  tidy_df = df %>% 
+    # remove Year trend column and the first column (larger category col)
+    select(-X4.YearTrend, -Annual.Data...Quarterly.Data) %>% 
+    # rename columns to things that make sense
+    rename(
+      Category = Annual.Data...Quarterly.Data.1,
+      Year_2015 = All.Currency.in.US.Dollars,
+      Year_2016 = All.Currency.in.US.Dollars.1,
+      Year_2017 = All.Currency.in.US.Dollars.2,
+      Year_2018 = All.Currency.in.US.Dollars.3
+      ) %>% 
+    # remove rows where there's no data
+    filter(Category	!= "") %>% 
+    # remove that first awk row that duplicates some of the column names
+    filter(Category != "Annual Data | Quarterly Data") %>% 
+    # make data 'tidy'
+    gather(Year_2015, Year_2016, Year_2017, Year_2018, key = "Year", value = "value") %>%  
+    spread(Category, value) %>% 
+    # format numbers nicely
+    rowwise() %>% 
+    mutate_all(set_dashes_as_NA) %>% 
+    mutate(
+      Year = str_replace(Year, "Year_", ""),
+      EPS = parse_number(str_remove(EPS, "\\$")),
+      `EPS Diluted` = parse_number(str_remove(`EPS Diluted`, "\\$"))
+    ) %>% 
+    mutate_all(B_or_M_or_K_to_num) %>% 
+    # add column with stock ticker, and move it to the front
+    add_column(Ticker = rep.int(ticker, nrow(.))) %>% 
+    select(Ticker, everything())
+  
+  # return the tidy df
+  tidy_df
+}
+```
+
+```{r}
+
+```
+
+

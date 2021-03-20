@@ -1,0 +1,57 @@
+---
+title: "API Workshop"
+date: "10/20/2020"
+output: 
+  html_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#install.packages(c("httr", "jsonlite"))
+
+library(httr)
+library(jsonlite)
+library(tidyverse)
+```
+
+# Example 1: Basic GET Request
+http://open-notify.org/Open-Notify-API/People-In-Space/
+```{r}
+
+```
+
+# Your Turn: Basic GET Request
+http://open-notify.org/Open-Notify-API/ISS-Location-Now/
+```{r}
+
+```
+
+# Example 2: GET Request w/Query
+http://api.open-notify.org/iss-pass.json?lat=LAT&lon=LON  
+Coordinates of OSU: 40.0067, 83.0305
+```{r}
+
+```
+
+# Your Turn: GET Request w/Query (Sunset-Sunrise API)
+https://sunrise-sunset.org/api
+```{r}
+
+```
+
+# Example 3: GET Request w/API key Authentication (Spotify API)
+https://developer.spotify.com/documentation/web-api/quick-start/
+https://developer.spotify.com/console/get-search-item/
+
+```{r}
+
+```
+
+
+# Your Turn: GET Request w/API key Authentication (Spotify API)
+https://developer.spotify.com/console/get-audio-analysis-track/
+
+```{r}
+
+```

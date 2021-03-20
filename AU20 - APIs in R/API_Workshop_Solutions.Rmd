@@ -1,0 +1,98 @@
+---
+title: "API Workshop - "Solutions""
+date: "10/20/2020"
+output: 
+  html_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#install.packages(c("httr", "jsonlite"))
+
+library(httr)
+library(jsonlite)
+library(tidyverse)
+```
+
+# Example 1: Basic GET Request
+http://open-notify.org/Open-Notify-API/People-In-Space/
+```{r}
+res = GET("http://api.open-notify.org/astros.json")
+```
+
+```{r}
+fromJSON(rawToChar(res$content))
+```
+
+
+# Your Turn: Basic GET Request
+http://open-notify.org/Open-Notify-API/ISS-Location-Now/
+```{r}
+res2 = GET("http://api.open-notify.org/iss-now.json")
+print(res2)
+fromJSON(rawToChar(res2$content))
+```
+
+# Example 2: GET Request w/Query
+http://api.open-notify.org/iss-pass.json?lat=LAT&lon=LON  
+Coordinates of OSU: 40.0067, 83.0305
+```{r}
+res = GET("http://api.open-notify.org/iss-pass.json?lat=40.0067&lon=83.0305")
+json_res = fromJSON(rawToChar(res$content))
+```
+
+```{r}
+time_df = json_res$response
+
+time_df = mutate(time_df, risetime_formatted = lubridate::as_datetime(risetime))
+```
+
+Here's also another way to add query parameters, it's generally recommended since it's easier to format, and you can pass variables to it:
+```{r}
+res = GET("http://api.open-notify.org/iss-pass.json", query = list(lat = 40.0067, lon = 83.0305))
+print(res)
+json = fromJSON(rawToChar(res$content))
+```
+
+# Your Turn: GET Request w/Query (Sunset-Sunrise API)
+https://sunrise-sunset.org/api
+```{r}
+res = GET("https://api.sunrise-sunset.org/json", query = list(lat = 40.0067, lng = 83.0305, date = "today"))
+print(res)
+json = fromJSON(rawToChar(res$content))
+print(json)
+```
+
+# Example 3: GET Request w/API key Authentication (Spotify API)
+https://developer.spotify.com/documentation/web-api/quick-start/
+https://developer.spotify.com/console/get-search-item/
+
+Remember to update this oauth token to your own since this one will be expired.
+
+```{r}
+spotify_oauth_header = "Bearer BQBp21_zCAcp2Xes-7lZi-CwyYFP0NfEz_7uUqMUWaygh2boyoB5UUfWe0JNYUxwDWR-BV5UCiixqm914eDtLJDOW60neNXtrwsX9WWkBlUVNJcvct_Gla4CnrC8g3kaKqBG3opx7o3KfswnE8JgUQ8"
+
+res = GET("https://api.spotify.com/v1/search?q=Muse&type=artist", config = add_headers(c(authorization = spotify_oauth_header)))
+
+json_res = fromJSON(rawToChar(res$content))
+```
+
+
+# Your Turn: GET Request w/API key Authentication (Spotify API)
+https://developer.spotify.com/console/get-audio-analysis-track/
+
+```{r}
+GET("https://api.spotify.com/v1/tracks/7mtYsNBYTDPa8Mscf166hg", config = add_headers(c(authorization = spotify_oauth_header)))
+```
+
+
+```{r}
+res = GET("https://api.spotify.com/v1/audio-analysis/7mtYsNBYTDPa8Mscf166hg", config = add_headers(c(authorization = spotify_oauth_header)))
+
+track_analysis = fromJSON(rawToChar(res$content))
+```
+
+```{r}
+track_analysis
+```

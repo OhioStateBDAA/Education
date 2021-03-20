@@ -6,6 +6,8 @@ output:
     toc: true
 ---
 
+Workshop Recording: https://www.youtube.com/watch?v=kZU240u9H3E  
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 #install.packages(c("httr", "jsonlite"))

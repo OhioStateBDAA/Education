@@ -5,6 +5,8 @@ date: "9/28/2020"
 output: html_document
 ---
 
+Workshop Recording: https://www.youtube.com/watch?v=dUqNXM03B4c  
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 # import libraries
